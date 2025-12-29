@@ -1,0 +1,1 @@
+{ "name": "Secure AI Assistant", "short_name": "AI Assistant", "start_url": "./index.html", "display": "standalone", "background_color": "#0a0a0a", "theme_color": "#00ffcc", "icons": [ { "src": "", "sizes": "512x512", "type": "image/png" } ] }
