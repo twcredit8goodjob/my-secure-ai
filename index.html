@@ -75,8 +75,7 @@
     <video id="webcam" autoplay playsinline></video>
   </div>
 <div id="speech-ui" style="padding:10px;">
-  <button id="speechBtn">Start Speech</button>
-
+ <button id="speechBtn">Start Speech</button>
   <div id="speechText"
        style="margin-top:10px;
               padding:10px;
@@ -96,11 +95,6 @@
   if (el) el.textContent = msg;
   console.log('[status]', msg);
 };
-
-      function setStatus(msg) {
-  if (statusEl) statusEl.textContent = msg;
-  console.log('[status]', msg);
-}
 
  let stream = null;
 
@@ -134,7 +128,7 @@ initBtn.addEventListener('click', async () => {
     setStatus('Camera failed ❌');
   }
 });
-    });
+
     let micStream = null;
 let audioCtx = null;
 let analyser = null;
@@ -159,11 +153,10 @@ function stopMic() {
 
   if (micBar) micBar.style.width = '0%';
   micBtn.textContent = 'Start Mic';
-  window.setStatus;
-tus('Mic stopped');
+  window.setStatus('Mic stopped');
 }
 
-function startMic() {
+    function startMic() {
   return navigator.mediaDevices.getUserMedia({ audio: true, video: false })
     .then(stream => {
       micStream = stream;
@@ -273,6 +266,7 @@ if (!speechBtn || !speechText) {
   </script>
 </body>
 </html>
+
 
 
 
