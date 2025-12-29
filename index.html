@@ -72,13 +72,13 @@
     document.addEventListener('DOMContentLoaded', () => {
       const initBtn = document.getElementById('initialize');
       const statusEl = document.getElementById('status');
-
+     
       function setStatus(msg) {
-        statusEl.textContent = msg;
-        console.log('[status]', msg);
-      }
+  if (statusEl) statusEl.textContent = msg;
+  console.log('[status]', msg);
+}
 
-      let stream = null;
+ let stream = null;
 
 initBtn.addEventListener('click', async () => {
   try {
@@ -193,5 +193,6 @@ micBtn.addEventListener('click', async () => {
   </script>
 </body>
 </html>
+
 
 
