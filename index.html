@@ -240,14 +240,12 @@ if (!speechBtn || !speechText) {
     recognition.onend = () => {
       recognizing = false;
       speechBtn.textContent = 'Start Speech';
-      window.setStatus?.('Speech stopped');
+      if (window.setStatus) window.setStatus('Speech stopped');
     };
-
-    recognition.onerror = (e) => {
+  recognition.onerror = (e) => {
       console.error(e);
-      window.setStatus?.('Speech error ❌');
+   if (window.setStatus) window.setStatus('Speech error ❌');
     };
-
     recognition.onresult = (event) => {
       let text = '';
       for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -256,16 +254,22 @@ if (!speechBtn || !speechText) {
       speechText.textContent = text;
     };
 
-    speechBtn.addEventListener('click', () => {
-      if (recognizing) recognition.stop();
-      else recognition.start();
-    });
+  speechBtn.addEventListener('click', () => {
+  if (!recognition) {
+    console.warn('SpeechRecognition not available');
+    if (window.setStatus) window.setStatus('Speech not supported ❌');
+    return;
+  }
+  if (recognizing) recognition.stop();
+  else recognition.start();
+});
   }
 }
 
   </script>
 </body>
 </html>
+
 
 
 
