@@ -56,6 +56,7 @@
        style="margin-top:10px;padding:10px;min-height:60px;">
     (speech text will appear here)
   </div>
+    </div>
   </style>
 </head>
 
@@ -202,64 +203,65 @@ micBtn.addEventListener('click', async () => {
     window.setStatus('Mic failed ❌');
   }
 });
-    // ===== Speech to Text =====
+// ===== Speech to Text =====
 const speechBtn = document.getElementById('speechBtn');
 const speechText = document.getElementById('speechText');
 
-let recognition = null;
-let recognizing = false;
-
-// Check support
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
-
-if (!SpeechRecognition) {
-  speechBtn.disabled = true;
-  speechBtn.textContent = 'Speech not supported';
-  console.warn('Speech Recognition not supported');
+if (!speechBtn || !speechText) {
+  console.warn('Speech UI missing: add #speechBtn and #speechText in HTML');
 } else {
-  recognition = new SpeechRecognition();
-  recognition.lang = 'en-US';     // change language if needed
-  recognition.continuous = true;
-  recognition.interimResults = true;
+  let recognition = null;
+  let recognizing = false;
 
-  recognition.onstart = () => {
-    recognizing = true;
-    speechBtn.textContent = 'Stop Speech';
-    setStatus('Listening 🎙️');
-  };
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  recognition.onend = () => {
-    recognizing = false;
-    speechBtn.textContent = 'Start Speech';
-    setStatus('Speech stopped');
-  };
+  if (!SpeechRecognition) {
+    speechBtn.disabled = true;
+    speechBtn.textContent = 'Speech not supported';
+    console.warn('Speech Recognition not supported in this browser');
+  } else {
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.continuous = true;
+    recognition.interimResults = true;
 
-  recognition.onerror = (e) => {
-    console.error(e);
-    setStatus('Speech error ❌');
-  };
+    recognition.onstart = () => {
+      recognizing = true;
+      speechBtn.textContent = 'Stop Speech';
+      window.setStatus?.('Listening 🎙️');
+    };
 
-  recognition.onresult = (event) => {
-    let text = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      text += event.results[i][0].transcript;
-    }
-    speechText.textContent = text;
-  };
+    recognition.onend = () => {
+      recognizing = false;
+      speechBtn.textContent = 'Start Speech';
+      window.setStatus?.('Speech stopped');
+    };
 
-  speechBtn.addEventListener('click', () => {
-    if (recognizing) {
-      recognition.stop();
-    } else {
-      recognition.start();
-    }
-  });
+    recognition.onerror = (e) => {
+      console.error(e);
+      window.setStatus?.('Speech error ❌');
+    };
+
+    recognition.onresult = (event) => {
+      let text = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        text += event.results[i][0].transcript;
+      }
+      speechText.textContent = text;
+    };
+
+    speechBtn.addEventListener('click', () => {
+      if (recognizing) recognition.stop();
+      else recognition.start();
+    });
+  }
 }
 
   </script>
 </body>
 </html>
+
 
 
 
