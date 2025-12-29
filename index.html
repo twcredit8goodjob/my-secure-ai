@@ -215,11 +215,11 @@ const speechText = document.getElementById('speechText');
 if (!speechBtn || !speechText) {
   console.warn('Speech UI missing: add #speechBtn and #speechText in HTML');
 } else {
-  let recognition = null;
-  let recognizing = false;
-
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  let recognition = null;
+  let recognizing = false;
 
   if (!SpeechRecognition) {
     speechBtn.disabled = true;
@@ -234,7 +234,7 @@ if (!speechBtn || !speechText) {
     recognition.onstart = () => {
       recognizing = true;
       speechBtn.textContent = 'Stop Speech';
-      window.setStatus?.('Listening 🎙️');
+      if (window.setStatus) window.setStatus('Listening 🎙️');
     };
 
     recognition.onend = () => {
@@ -242,10 +242,12 @@ if (!speechBtn || !speechText) {
       speechBtn.textContent = 'Start Speech';
       if (window.setStatus) window.setStatus('Speech stopped');
     };
-  recognition.onerror = (e) => {
+
+    recognition.onerror = (e) => {
       console.error(e);
-   if (window.setStatus) window.setStatus('Speech error ❌');
+      if (window.setStatus) window.setStatus('Speech error ❌');
     };
+
     recognition.onresult = (event) => {
       let text = '';
       for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -254,21 +256,22 @@ if (!speechBtn || !speechText) {
       speechText.textContent = text;
     };
 
-  speechBtn.addEventListener('click', () => {
-  if (!recognition) {
-    console.warn('SpeechRecognition not available');
-    if (window.setStatus) window.setStatus('Speech not supported ❌');
-    return;
-  }
-  if (recognizing) recognition.stop();
-  else recognition.start();
-});
+    speechBtn.addEventListener('click', () => {
+      if (!recognition) {
+        console.warn('SpeechRecognition not available');
+        if (window.setStatus) window.setStatus('Speech not supported ❌');
+        return;
+      }
+      if (recognizing) recognition.stop();
+      else recognition.start();
+    });
   }
 }
 
   </script>
 </body>
 </html>
+
 
 
 
