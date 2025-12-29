@@ -140,7 +140,8 @@ function stopMic() {
 
   if (micBar) micBar.style.width = '0%';
   micBtn.textContent = 'Start Mic';
-  setStatus('Mic stopped');
+  window.setStatus;
+tus('Mic stopped');
 }
 
 function startMic() {
@@ -178,7 +179,7 @@ function startMic() {
       tick();
 
       micBtn.textContent = 'Stop Mic';
-      setStatus('Mic ON ✅');
+      window.setStatus('Mic ON ✅');
     });
 }
 
@@ -188,16 +189,17 @@ micBtn.addEventListener('click', async () => {
       stopMic();
       return;
     }
-    setStatus('Requesting mic permission...');
+    window.setStatus('Requesting mic permission...');
     await startMic();
   } catch (e) {
     console.error(e);
-    setStatus('Mic failed ❌');
+    window.setStatus('Mic failed ❌');
   }
 });
   </script>
 </body>
 </html>
+
 
 
 
