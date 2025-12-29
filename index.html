@@ -74,18 +74,40 @@
         console.log('[status]', msg);
       }
 
-      initBtn.addEventListener('click', async () => {
-        try {
-          setStatus('Initializing...');
-          await new Promise(r => setTimeout(r, 500));
-          setStatus('Ready ✅');
-          console.log('Initialize button clicked');
-        } catch (e) {
-          console.error(e);
-          setStatus('Init failed ❌');
-        }
-      });
+      let stream = null;
+
+initBtn.addEventListener('click', async () => {
+  try {
+    const video = document.getElementById('webcam');
+
+    // If already running, stop it (toggle behavior)
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+      video.srcObject = null;
+      setStatus('Camera stopped');
+      return;
+    }
+
+    setStatus('Requesting camera permission...');
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user' }, // 'user' = front camera, 'environment' = back camera
+      audio: false
+    });
+
+    video.srcObject = stream;
+    await video.play();
+
+    setStatus('Camera ON ✅');
+    console.log('Webcam started');
+  } catch (e) {
+    console.error(e);
+    setStatus('Camera failed ❌');
+  }
+});
     });
   </script>
 </body>
 </html>
+
