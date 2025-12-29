@@ -14,7 +14,7 @@
       console.log('Initialize button clicked');
     });
   });
-</script><body> <header> <div id="dot" class="status-dot"></div> <span id="status">ONLINE</span> </header> <div id="vision-container"> <video id="webcam" autoplay muted playsinline></video> <canvas id="overlay"></canvas> <div id="logs">Tap below to start AI monitoring.</div> </div> <div class="ui-layer"> <div class="audio-bar"><div id="rms-fill"></div></div> <button id="main-btn" onclick="startApp()">INITIALIZE AI</button> </div> <script> let analyzer, model, stream, isVisionActive = false; const video = document.getElementById('webcam'); const canvas = document.getElementById('overlay'); const ctx = canvas.getContext('2d'); const statusText = document.getElementById('status'); const logText = document.getElementById('logs'); const dot = document.getElementById('dot'); const rmsFill = document.getElementById('rms-fill');
+</script><body> <header> <div id="dot" class="status-dot"></div> <span id="status">ONLINE</span> </header> <div id="vision-container"> <video id="webcam" autoplay muted playsinline></video> <canvas id="overlay"></canvas> <div id="logs">Tap below to start AI monitoring.</div> </div> <div class="ui-layer"> <div class="audio-bar"><div id="rms-fill"></div></div> <button id="initialize">Initialize</button> </div> <script> let analyzer, model, stream, isVisionActive = false; const video = document.getElementById('webcam'); const canvas = document.getElementById('overlay'); const ctx = canvas.getContext('2d'); const statusText = document.getElementById('status'); const logText = document.getElementById('logs'); const dot = document.getElementById('dot'); const rmsFill = document.getElementById('rms-fill');
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -46,6 +46,7 @@
 </body>
 
 </body> </html>
+
 
 
 
