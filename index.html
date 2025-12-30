@@ -270,8 +270,33 @@ if (!speechBtn || !speechText) {
  }
  });     
  </script>
+  <script>
+async function callLLM() {
+  const res = await fetch(
+    'https://printable-effective-reaching-davidson.trycloudflare.com/api/generate',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'deepseek-r1:8b',
+        prompt: 'Say hello',
+        stream: false
+      })
+    }
+  );
+
+  const data = await res.json();
+  console.log(data.response);
+}
+
+callLLM();
+</script>
+
 </body>
 </html>
+
 
 
 
